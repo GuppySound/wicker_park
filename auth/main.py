@@ -18,10 +18,11 @@ def getCode():
 @auth_api.route('/getTokens', methods=['GET'])
 def getTokens():
     authCode = request.args.get('code', '')
+    redirectUri = requests.args.get('redirect_uri', '')
     payload = {
         'grant_type': 'authorization_code',
         'code': authCode,
-        'redirect_uri': f'{config.URL}/auth/getTokens',
+        'redirect_uri': redirectUri or f'{config.URL}/auth/getTokens',
         'client_id': config.spotify['CLIENT_ID'],
         'client_secret': config.spotify['CLIENT_SECRET']
     }
