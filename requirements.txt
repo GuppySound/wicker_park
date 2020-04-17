@@ -26,7 +26,7 @@ pyserial==3.0.1
 python-debian==0.1.37
 python-dotenv==0.12.0
 python-systemd==0.0.9
-PyYAML==3.11
+PyYAML==5.1
 requests==2.9.1
 six==1.10.0
 ssh-import-id==5.5
