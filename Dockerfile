@@ -26,7 +26,7 @@ RUN pip3 install google-cloud-secret-manager
 RUN pip3 install firebase_admin
 RUN pip3 install mock
 RUN pip3 install google-auth
-RUN pip3 install google-cloud-firebase
+RUN pip3 install google-cloud-firestore
 #ADD requirements.txt /app/requirements.txt
 #RUN pip3 install -r /app/requirements.txt
 
