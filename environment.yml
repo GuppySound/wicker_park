@@ -1,0 +1,14 @@
+name: wicker_park
+
+dependencies:
+  - python=3.7.7
+  - requests
+  - flask
+  - flask-cors
+  - gunicorn
+  - mock
+  - google-auth
+  - pip:
+    - google-cloud-firestore
+    - google-cloud-secret-manager
+    - firebase_admin
