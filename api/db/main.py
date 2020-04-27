@@ -69,7 +69,7 @@ def createUser():
             'spotify_auth_code': authCode,
             'spotify_id': user['id'],
             'spotify_display_name': user['display_name'],
-            'spotify_images': user['images'][0] if user['images'] else None,
+            'spotify_profile_picture': user['images'][0]['url'] if user['images'] else None,
             'spotify_refresh_token': tokens['refresh_token'],
             'created_at': datetime.datetime.now().strftime('%Y-%d-%mT%H:%M:%S')
         })
