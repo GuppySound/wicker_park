@@ -29,7 +29,7 @@ def parseSpotifyPlayback(data):
         'progress_ms': data.get('progress_ms'),
         'duration_ms': item.get('duration_ms'),
         'played_at': data.get('played_at')
-    } if data else None
+    } if item else None
 
 @spotify_routes.route('/me', methods=['GET'])
 def getMe():
