@@ -81,7 +81,21 @@ def createUser():
 def updateUser():
     try:
         userId = request.args.get('id')
-        usersRef.document(userId).update(request.form)
+        usersRef.document(userId).update(request.get_json())
+        return json.dumps({'success': True})
+    except Exception as e:
+        return f"An Error Occured: {e}"
+
+@user_routes.route('/updateFollowing', methods=['POST'])
+def updatePlayback():
+    try:
+        userId = request.form.get('id')
+        followingRef = usersRef.where("followers", "array_contains", userId)
+        docs = followingRef.stream()
+        for doc in docs:
+            data = doc.to_dict()
+            payload = {'id': doc.id, 'access_token': data['spotify_access_token'], 'refresh_token': data['spotify_refresh_token']}
+            requests.get(f'{config.URL}{config.API_PREFIX}/spotify/me/playback', params=payload)
         return json.dumps({'success': True})
     except Exception as e:
         return f"An Error Occured: {e}"
