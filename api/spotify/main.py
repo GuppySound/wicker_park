@@ -48,7 +48,7 @@ def getPlayback():
             currently_playing = requests.get(f'https://api.spotify.com/v1/me/player/currently-playing', headers=headers)
 
         if currently_playing.status_code == 204:
-            params = {'limit': 5}
+            params = {'limit': 1}
             recently_played = requests.get(f'https://api.spotify.com/v1/me/player/recently-played', headers=headers, params=params)
         else:
             recently_played = None
