@@ -24,7 +24,8 @@ def parseSpotifyPlayback(data):
         'track_name': item.get('name'),
         'artist_name': ", ".join([i['name'] for i in item.get('artists')]) if
         'artists' in item else item.get('show', {}).get('publisher'),
-        'is_playing': data.get('is_playing'),
+        'is_playing': data.get('is_playing', False),
+        'is_active': data.get('is_playing') is not None,
         'progress_ms': data.get('progress_ms'),
         'duration_ms': item.get('duration_ms'),
         'played_at': data.get('played_at')
