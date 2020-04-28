@@ -17,6 +17,19 @@ def parseUserTokens(request):
         refresh_token = user['spotify_refresh_token']
     return user_id, access_token, refresh_token
 
+def parseSpotifyPlayback(data):
+    item = data.get('item', data.get('track'))
+    return {
+        'id': item.get('id'),
+        'track_name': item.get('name'),
+        'artist_name': ", ".join([i['name'] for i in item.get('artists')]) if
+        'artists' in item else item.get('show', {}).get('publisher'),
+        'is_playing': data.get('is_playing'),
+        'progress_ms': data.get('progress_ms'),
+        'duration_ms': item.get('duration_ms'),
+        'played_at': data.get('played_at')
+    } if data else None
+
 @spotify_routes.route('/me', methods=['GET'])
 def getMe():
     try:
@@ -41,11 +54,12 @@ def getPlayback():
         user_id, access_token, refresh_token = parseUserTokens(request)
 
         headers = {'Authorization': f'Bearer {access_token}'}
-        currently_playing = requests.get('https://api.spotify.com/v1/me/player/currently-playing', headers=headers)
+        params = {'additional_types': 'episode'}
+        currently_playing = requests.get('https://api.spotify.com/v1/me/player/currently-playing', headers=headers, params=params)
         if currently_playing.status_code == 401:
             access_token = refreshToken(refresh_token, user_id)
             headers = {'Authorization': f'Bearer {access_token}'}
-            currently_playing = requests.get(f'https://api.spotify.com/v1/me/player/currently-playing', headers=headers)
+            currently_playing = requests.get(f'https://api.spotify.com/v1/me/player/currently-playing', headers=headers, params=params)
 
         if currently_playing.status_code == 204:
             params = {'limit': 1}
@@ -54,8 +68,8 @@ def getPlayback():
             recently_played = None
 
         updatePayload = {
-            'spotify_currently_playing': dict(currently_playing.json()) if currently_playing.status_code == 200 else None,
-            'spotify_recently_played': dict(recently_played.json()['items'][0]) if recently_played else None
+            'spotify_playback': parseSpotifyPlayback(currently_playing.json() if currently_playing.status_code == 200 else
+                                                     recently_played.json()['items'][0])
         }
         updateArgs = {'id': user_id}
 
