@@ -55,7 +55,7 @@ def getPlayback():
 
         updatePayload = {
             'spotify_currently_playing': dict(currently_playing.json()) if currently_playing.status_code == 200 else None,
-            'spotify_recently_played': dict(recently_played.json()) if recently_played else None
+            'spotify_recently_played': dict(recently_played.json()['items'][0]) if recently_played else None
         }
         updateArgs = {'id': user_id}
 
