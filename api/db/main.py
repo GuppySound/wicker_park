@@ -101,6 +101,5 @@ def updatePlayback():
         response = make_response(json.dumps({'success': True}))
         response.headers['Access-Control-Allow-Origin'] = '*'
         return response
-        return
     except Exception as e:
         return f"An Error Occured: {e}"
