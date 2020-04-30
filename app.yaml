@@ -1,6 +1,5 @@
-runtime: custom
-env: flex
-entrypoint: gunicorn -b :$PORT main:app
+runtime: python37
+env: standard
 service: wicker-park
 
 env_variables:

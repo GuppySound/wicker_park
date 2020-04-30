@@ -1,9 +1,0 @@
-steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/quickstart-image', '--cache-from', 'gcr.io/$PROJECT_ID/[IMAGE_NAME]:latest', '.' ]
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/quickstart-image']
-#- name: 'gcr.io/cloud-builders/gcloud'
-#  args: ['app', 'deploy', 'app.yaml', '--image-url', 'gcr.io/iconic-hue-273619/quickstart-image:latest']
-images:
-- 'gcr.io/$PROJECT_ID/quickstart-image'

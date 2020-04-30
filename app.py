@@ -20,8 +20,6 @@ logger = logging.getLogger()
 def createApp():
 
     app = Flask(__name__)
-    app.config['SECRET_KEY'] = 'the quick brown fox jumps over the lazy   dog'
-    app.config['CORS_HEADERS'] = 'Content-Type'
     CORS(app)
     logger.info(f'App running in {config.APP_ENV} environment')
 
