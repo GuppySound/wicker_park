@@ -1,6 +1,6 @@
 import config
 import os
-from flask import Blueprint,request,abort,make_response
+from flask import Blueprint,request,abort
 from firebase_admin import credentials,initialize_app
 import mock
 from google.cloud import firestore
@@ -75,12 +75,10 @@ def createUser():
             'spotify_refresh_token': tokens['refresh_token'],
             'created_at': datetime.datetime.now().strftime('%Y-%d-%mT%H:%M:%S')
         })
-        response = make_response(json.dumps({'id': userRef.id}))
+        return json.dumps({'id': userRef.id})
     except Exception as e:
         print(e)
-        response = make_response(f"An Error Occured: {e}")
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    return response
+        return f"An Error Occured: {e}"
 
 @user_routes.route('/updateUser', methods=['PUT', 'POST'])
 def updateUser():
@@ -101,10 +99,8 @@ def updatePlayback():
             data = doc.to_dict()
             payload = {'id': doc.id, 'access_token': data['spotify_access_token'], 'refresh_token': data['spotify_refresh_token']}
             requests.get(f'{config.URL}{config.API_PREFIX}/spotify/me/playback', params=payload)
-        response = make_response(json.dumps({'success': True}))
+        return json.dumps({'success': True})
 
     except Exception as e:
         print(e)
-        response = make_response(f"An Error Occured: {e}")
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    return response
+        return f"An Error Occured: {e}"
