@@ -23,7 +23,6 @@ else:
     #
     # credentials = mock.Mock(spec=google.auth.credentials.Credentials)
     # db = firestore.Client(project="test", credentials=credentials)
-    print("initialize locally")
     cred = credentials.Certificate(f'secrets_dev.json')
     initialize_app(cred)
     db = firestore.Client(project='guppy-dev')
