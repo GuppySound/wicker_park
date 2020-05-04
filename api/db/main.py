@@ -23,14 +23,15 @@ else:
     #
     # credentials = mock.Mock(spec=google.auth.credentials.Credentials)
     # db = firestore.Client(project="test", credentials=credentials)
-    cred = credentials.Certificate('iconic-hue-273619-firebase-adminsdk-vomu4-c773532c36.json')
+    print("initialize locally")
+    cred = credentials.Certificate(f'secrets_dev.json')
     initialize_app(cred)
-    db = firestore.Client()
+    db = firestore.Client(project='guppy-dev')
 
 user_routes = Blueprint('user_routes', __name__)
 CORS(user_routes)
 
-usersRef = db.collection(config.USERS_COLLECTION_ID)
+usersRef = db.collection("users")
 
 @user_routes.route('/getUser', methods=['GET'])
 def getUser():

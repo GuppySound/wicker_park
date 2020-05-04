@@ -9,20 +9,19 @@ class BaseConfig():
         'CLIENT_ID': getSecret('SPOTIFY_CLIENT_ID'),
         'CLIENT_SECRET': getSecret('SPOTIFY_CLIENT_SECRET'),
     }
-    FIRESTORE_KEY = getSecret('FIRESTORE_KEY')
 
 
 class DevConfig(BaseConfig):
     FLASK_ENV = 'development'
     DEBUG = True
     URL = 'http://127.0.0.1:8080'
-    USERS_COLLECTION_ID = getSecret('USERS_COLLECTION_ID_DEV')
+    FIRESTORE_KEY = getSecret('FIRESTORE_DEV')
 
 
 class ProductionConfig(BaseConfig):
     FLASK_ENV = 'production'
     URL = 'https://wicker-park-dot-iconic-hue-273619.appspot.com'
-    USERS_COLLECTION_ID = getSecret('USERS_COLLECTION_ID_PRODUCTION')
+    FIRESTORE_KEY = getSecret('FIRESTORE_KEY')
 
 
 class TestConfig(BaseConfig):
