@@ -89,7 +89,7 @@ def updatePlayback(user_id):
         print(playback)
         payload = {
           "uris": [playback['spotify_uri']],
-          "position_ms": playback['progress_ms']-(min(playback['progress_ms'], 0))
+          "position_ms": playback['progress_ms']-(min(playback['progress_ms'], 1250))
         }
         play = requests.put(
             'https://api.spotify.com/v1/me/player/play',
